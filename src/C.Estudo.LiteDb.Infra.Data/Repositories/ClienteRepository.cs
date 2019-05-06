@@ -1,6 +1,8 @@
 ﻿using C.Estudo.LiteDb.Domain.Entitites;
 using LiteDB;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace C.Estudo.LiteDb.Infra.Data.Repositories
 {
@@ -10,7 +12,8 @@ namespace C.Estudo.LiteDb.Infra.Data.Repositories
 
         public ClienteRepository()
         {
-            using (var db = new LiteDatabase(@"C:\Users\Caio\Source\Repos\C.Estudo.LiteDb\database\Clientes.db"))
+            string pastaDb = ObterCaminhoDoBanco();
+            using (var db = new LiteDatabase(pastaDb))
             {
                 _liteCollection = db.GetCollection<Cliente>("clientes");
             }
@@ -29,6 +32,12 @@ namespace C.Estudo.LiteDb.Infra.Data.Repositories
         public IEnumerable<Cliente> Listar()
         {
             return _liteCollection.Find(cliente => cliente.IsActive);
+        }
+
+        private static string ObterCaminhoDoBanco()
+        {
+            string pastaDaSolucao = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\..\\..\\"));
+            return $@"{pastaDaSolucao}database\Clientes.db";
         }
     }
 }

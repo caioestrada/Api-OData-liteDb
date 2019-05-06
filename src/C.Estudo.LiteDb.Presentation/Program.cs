@@ -12,17 +12,20 @@ namespace C.Estudo.LiteDb.Presentation
         {
             _clienteRepository = new ClienteRepository();
 
+            //Adicionar
+            //_clienteRepository.Inserir(new Domain.Entitites.Cliente { Name = "Adam", Age = 40, IsActive = true });
+
             //Listar
             _clienteRepository.Listar().ToList().ForEach(cliente => Console.WriteLine($"Id: {cliente.Id} / Nome: {cliente.Name} / Idade: {cliente.Age}"));
             Console.ReadKey();
 
             //Atualizar
-            var travis = _clienteRepository.Listar().ToList().FirstOrDefault(cliente => cliente.Name == "Travis");
-            travis.Age = 27;
-            travis.IsActive = true;
-            _clienteRepository.Atualizar(travis);
+            //var travis = _clienteRepository.Listar().ToList().FirstOrDefault(cliente => cliente.Name.Contains("Adam"));
+            //travis.Age = 27;
+            //travis.IsActive = true;
+            //_clienteRepository.Atualizar(travis);
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }
