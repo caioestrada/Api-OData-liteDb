@@ -6,26 +6,35 @@ namespace C.Estudo.LiteDb.Presentation
 {
     public class Program
     {
-        public static ClienteRepository _clienteRepository;
-
         static void Main(string[] args)
         {
-            _clienteRepository = new ClienteRepository();
-
-            //Adicionar
-            //_clienteRepository.Inserir(new Domain.Entitites.Cliente { Name = "Adam", Age = 40, IsActive = true });
-
-            //Listar
-            _clienteRepository.Listar().ToList().ForEach(cliente => Console.WriteLine($"Id: {cliente.Id} / Nome: {cliente.Name} / Idade: {cliente.Age}"));
-            Console.ReadKey();
-
-            //Atualizar
-            //var travis = _clienteRepository.Listar().ToList().FirstOrDefault(cliente => cliente.Name.Contains("Adam"));
-            //travis.Age = 27;
-            //travis.IsActive = true;
-            //_clienteRepository.Atualizar(travis);
+            var _clienteRepository = new ClienteRepository();
+            //AdicionarCliente(_clienteRepository);
+            ListarClientes(_clienteRepository);
+            //AtualizarCliente(_clienteRepository);
 
             //Console.ReadKey();
+        }
+
+        private static void ListarClientes(ClienteRepository clienteRepository)
+        {
+            clienteRepository.Listar().ToList().ForEach(cliente => Console.WriteLine($"Id: {cliente.Id} / Nome: {cliente.Name} / Idade: {cliente.Age}"));
+            Console.ReadKey();
+        }
+
+        private static void AtualizarCliente(ClienteRepository clienteRepository)
+        {
+            var adam = clienteRepository.Listar().ToList().FirstOrDefault(cliente => cliente.Name.Contains("Adam"));
+            adam.Age = 27;
+            adam.IsActive = true;
+            clienteRepository.Atualizar(adam);
+        }
+
+        private static void AdicionarCliente(ClienteRepository clienteRepository)
+        {
+            clienteRepository.Inserir(new Domain.Entitites.Cliente { Name = "Brad", Age = 50, IsActive = true });
+            clienteRepository.Inserir(new Domain.Entitites.Cliente { Name = "Leonardo", Age = 49, IsActive = true });
+            clienteRepository.Inserir(new Domain.Entitites.Cliente { Name = "Tom", Age = 52, IsActive = true });
         }
     }
 }
